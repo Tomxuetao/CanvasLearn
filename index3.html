@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>流星</title>
+    <style>
+        body {
+            margin: 0;
+            background: rgba(0, 26, 69, 1);
+        }
+        
+        .canvas-wrapper {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="canvas-wrapper">
+    <canvas id="canvas" width="1920" height="789"></canvas>
+</div>
+<script>
+    (function () {
+        var lastTime = 0;
+        var vendors = ['webkit', 'moz'];
+        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+            window.cancelAnimationFrame =
+                window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+        
+        if (!window.requestAnimationFrame)
+            window.requestAnimationFrame = function (callback) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function () {
+                        callback(currTime + timeToCall);
+                    },
+                    timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+        
+        if (!window.cancelAnimationFrame)
+            window.cancelAnimationFrame = function (id) {
+                clearTimeout(id);
+            };
+    }());
+    //获取Canvas对象(画布)
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    
+    function Rocket (x, y, size) {
+        this.x = x
+        this.y = y
+        this.size = size
+    }
+    
+    Rocket.prototype.update = function () {
+        this.y -= 20
+        this.size += 0.1
+    }
+    
+    Rocket.prototype.render = function (context) {
+        var x = this.x,
+            y = this.y,
+            r = this.size / 2
+        var gradient = context.createRadialGradient(x, y, 0.1, x, y, r);
+        gradient.addColorStop(0, "#ffff00");
+        gradient.addColorStop(1, "rgba(0, 0, 0, 1)");
+        context.fillStyle = gradient;
+        context.beginPath();
+        context.arc(x, y, r, 0, 2 * Math.PI, true);
+        context.closePath();
+        context.fill();
+    }
+    
+    
+    var rocket = new Rocket(400, 800, 10)
+    
+    function animate () {
+        rocket.render(context)
+        rocket.update()
+        requestAnimationFrame(animate)
+    }
+    
+    animate()
+
+</script>
+</body>
+</html>

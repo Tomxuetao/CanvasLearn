@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绘制三次贝尔曲线</title>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+    var canvasWidth = document.documentElement['clientWidth']
+    var canvasHeight = document.documentElement['clientHeight']
+
+    var canvas = document.getElementById('canvas');
+
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+
+
+    var canvas = document.getElementById('canvas')
+    var ctx = canvas.getContext('2d')
+ 
+    // 三次贝塞尔曲线
+    ctx.lineWidth = 1
+    ctx.strokeStyle = '#ff0000'
+    ctx.beginPath()
+    ctx.moveTo(329, 55.15625)
+    ctx.bezierCurveTo(82, 45.15625, 18, 294.15625, 106, 383.15625)
+    ctx.stroke()
+
+    // 三次贝塞尔曲线
+    ctx.lineWidth = 1
+    ctx.strokeStyle = '#ff0000'
+    ctx.beginPath()
+    ctx.moveTo(329, 55.15625)
+    ctx.bezierCurveTo(461, 58.15625, 544, 128.15625, 678, 56.15625)
+    ctx.stroke()
+
+    // 三次贝塞尔曲线
+    ctx.lineWidth = 1
+    ctx.strokeStyle = '#ff0000'
+    ctx.beginPath()
+    ctx.moveTo(677, 57.15625)
+    ctx.bezierCurveTo(806, 3.15625, 970, 122.15625, 920, 228.15625)
+    ctx.stroke()
+
+    // 三次贝塞尔曲线
+    ctx.lineWidth = 1
+    ctx.strokeStyle = '#ff0000';
+    ctx.beginPath()
+    ctx.moveTo(466, 394.15625)
+    ctx.bezierCurveTo(272, 557.15625, 106, 384.15625, 106, 383.15625)
+    ctx.stroke()
+
+    // 三次贝塞尔曲线
+    ctx.lineWidth = 1
+    ctx.strokeStyle = '#ff0000'
+    ctx.beginPath()
+    ctx.moveTo(465, 395.15625)
+    ctx.bezierCurveTo(660, 229.15625, 818, 398.15625, 920, 228.15625)
+    ctx.stroke()
+</script>
+</body>
+</html>

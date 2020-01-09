@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绘制关系图</title>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+    var canvasWidth = document.documentElement['clientWidth']
+    var canvasHeight = document.documentElement['clientHeight']
+
+    var canvas = document.getElementById('canvas');
+
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+
+    var context = canvas.getContext('2d');
+
+    var arcArray = [
+        {
+            x: canvasWidth / 2,
+            y: canvasHeight / 2,
+            color: '#0013ff',
+            size: 30
+        },
+        {
+            x: 100,
+            y: 100,
+            color: '#0013ff',
+            size: 20
+        },
+        {
+            x: 1200,
+            y: 120,
+            color: 'red',
+            size: 20
+        },
+        {
+            x: 800,
+            y: 800,
+            color: 'red',
+            size: 20
+        },
+        {
+            x: 900,
+            y: 800,
+            color: 'red',
+            size: 20
+        },
+        {
+            x: 1800,
+            y: 800,
+            color: 'red',
+            size: 20
+        }
+    ]
+
+    function assembleData (size) {
+        var arcArray = [
+            {
+                x: canvasWidth / 2,
+                y: canvasHeight / 2,
+                color: '#0013ff',
+                size: 30
+            }
+        ]
+
+        var rad = 2 * Math.PI / 12
+
+        var len = size / 12
+
+        for (var i = 0; i < size; i++) {
+            var temp = Math.ceil((i + 1) / 12)
+            var r = 120 + temp * 80
+
+            console.log(temp)
+            arcArray.push({
+                x: canvasWidth / 2 + Math.cos(rad * i + (rad / len) * temp) * r,
+                y: canvasHeight / 2 - Math.sin(rad * i + (rad / len) * temp) * r,
+                color: 'red',
+                size: 20
+            })
+        }
+        return arcArray
+    }
+
+    function createArcs (context, arcArray) {
+        context.globalCompositeOperation = 'destination-over'
+        for (var i = 0; i < arcArray.length; i++) {
+            var temp = arcArray[i];
+            context.beginPath()
+            context.arc(temp.x, temp.y, temp.size, 0, Math.PI * 2, false);
+            context.fillStyle = temp.color
+            context.fill();
+            context.closePath();
+            if (i > 0) {
+                createLines(context, arcArray[0], arcArray[i])
+            }
+        }
+    }
+
+    function createLines (context, origin, target) {
+        context.beginPath()
+        context.moveTo(origin.x, origin.y)
+        context.lineTo(target.x, target.y)
+        context.strokeStyle = target.color
+        context.stroke()
+        context.closePath()
+    }
+
+    var tempArray = assembleData(6)
+
+    createArcs(context, tempArray)
+
+</script>
+</body>
+</html>
